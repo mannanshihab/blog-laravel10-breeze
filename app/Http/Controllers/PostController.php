@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
@@ -126,6 +127,4 @@ class PostController extends Controller
 
         return abort(500);
     }
-
-    
 }
