@@ -7,10 +7,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    
     /**
      * Display the user's profile form.
      */
@@ -32,6 +34,17 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        if ($request->hasFile('profile_image')) {
+            // get current image path and replace the storage path with public path
+            $currentImage = str_replace('/storage', '/public', $request->user()->profile_image);
+            // delete current image
+            Storage::delete($currentImage);
+
+            $file = Storage::disk('public')->put('images/profile/profile-images', request()->file('profile_image'), 'public');
+            $path = Storage::url($file);
+            $request->user()['profile_image'] = $path;
+        }
+
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
@@ -47,6 +60,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $currentImage = str_replace('/storage', '/public', $user->profile_image);
+        Storage::delete($currentImage);
 
         Auth::logout();
 

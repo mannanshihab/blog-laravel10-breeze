@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
     </head>
-<body class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter bg-gray-500 selection:bg-red-500 selection:text-white">
+<body class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center dark:bg-dots-lighter bg-gray-500 selection:bg-red-500 selection:text-white">
     <main>
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
             @include('home.nav')
